@@ -35,6 +35,7 @@ function Form({ currentId, setCurrentId }) {
     }
     clear();
   };
+
   const clear = () => {
     setCurrentId(null);
     setPostData({
@@ -94,7 +95,7 @@ function Form({ currentId, setCurrentId }) {
           fullWidth
           value={postData.tags}
           onChange={(e) => {
-            setPostData({ ...postData, tags: e.target.value });
+            setPostData({ ...postData, tags: e.target.value.split(",") });
           }}
         />
         <div className={classes.fileInput}>
@@ -116,18 +117,18 @@ function Form({ currentId, setCurrentId }) {
         >
           Submit
         </Button>
-        <Button
-          className={classes.buttonSubmit}
-          variant="contained"
-          color="secondary"
-          size="large"
-          type="submit"
-          onClick={clear}
-          fullWidth
-        >
-          Clear
-        </Button>
       </form>
+      <Button
+        className={classes.buttonSubmit}
+        variant="contained"
+        color="secondary"
+        size="large"
+        type="submit"
+        onClick={clear}
+        fullWidth
+      >
+        Clear
+      </Button>
     </Paper>
   );
 }

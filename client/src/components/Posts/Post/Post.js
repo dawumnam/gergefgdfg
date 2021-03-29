@@ -52,7 +52,12 @@ function Post({ post, setCurrentId }) {
         {post.title}
       </Typography>
       <CardContent>
-        <Typography variant="body2" gutterBottom>
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          component="p"
+          gutterBottom
+        >
           {post.message}
         </Typography>
       </CardContent>
@@ -65,7 +70,7 @@ function Post({ post, setCurrentId }) {
           }}
         >
           <ThumbUpAltIcon fontSize="small" />
-          Like {post.likedCount}
+          &nbsp; Like &nbsp; {post.likedCount}
         </Button>
         <Button
           size="small"
@@ -75,7 +80,7 @@ function Post({ post, setCurrentId }) {
           }}
         >
           <DeleteIcon fontSize="small" />
-          Delete
+          &nbsp;Delete
         </Button>
       </CardActions>
     </Card>
