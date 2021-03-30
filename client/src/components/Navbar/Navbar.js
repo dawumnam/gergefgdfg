@@ -48,7 +48,7 @@ export default function Navbar() {
             <div className={classes.profile}>
               <Avatar
                 className={classes.purple}
-                alt={user.userInfo.name}
+                alt={user.userInfo?.name}
                 src={user.userInfo.imageUrl}
               >
                 {user.userInfo.name.charAt(0)}

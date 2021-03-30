@@ -17,18 +17,36 @@ import { LockOutlined } from "@material-ui/icons";
 import useStyles from "./styles";
 import Input from "./Input";
 
+import { signin, signup } from "../../actions/posts";
+
 function Auth() {
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
 
+  const [userInfo, setUserInfo] = useState({
+    lastName: "",
+    firstName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const handleSubmit = () => {};
-  const handleChange = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isSignup) {
+      dispatch(signup(userInfo, history));
+    } else {
+      dispatch(signin(userInfo, history));
+    }
+  };
+
   const handleShowPassword = () =>
     setShowPassword((prevShowPassword) => !prevShowPassword);
+
   const switchMode = () => {
     setIsSignup((prevIsSIgnup) => !prevIsSIgnup);
     setShowPassword(false);
@@ -64,14 +82,24 @@ function Auth() {
                 <Input
                   name="firstName"
                   label="FIrst Name"
-                  handleChange={handleChange}
+                  handleChange={(e) =>
+                    setUserInfo({
+                      ...userInfo,
+                      [e.target.name]: e.target.value,
+                    })
+                  }
                   autoFocus
                   half
                 />
                 <Input
                   name="lastName"
                   label="Last Name"
-                  handleChange={handleChange}
+                  handleChange={(e) =>
+                    setUserInfo({
+                      ...userInfo,
+                      [e.target.name]: e.target.value,
+                    })
+                  }
                   half
                 />
               </>
@@ -79,13 +107,17 @@ function Auth() {
             <Input
               name="email"
               label="Email Address"
-              handleChange={handleChange}
+              handleChange={(e) =>
+                setUserInfo({ ...userInfo, [e.target.name]: e.target.value })
+              }
               type="email"
             />
             <Input
               name="password"
               label="password"
-              handleChange={handleChange}
+              handleChange={(e) =>
+                setUserInfo({ ...userInfo, [e.target.name]: e.target.value })
+              }
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
             />
@@ -93,7 +125,9 @@ function Auth() {
               <Input
                 name="confirmPassword"
                 label="Repeat Password"
-                handleChange={handleChange}
+                handleChange={(e) =>
+                  setUserInfo({ ...userInfo, [e.target.name]: e.target.value })
+                }
                 type="password"
               />
             )}
