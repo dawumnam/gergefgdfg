@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { UPDATE, FETCH_ALL, DELETE, CREATE } from "../constants/actionTypes";
 
 export default (posts = [], action) => {
