@@ -17,7 +17,7 @@ import { LockOutlined } from "@material-ui/icons";
 import useStyles from "./styles";
 import Input from "./Input";
 
-import { signin, signup } from "../../actions/posts";
+import { signin, signup } from "../../actions/auth";
 
 function Auth() {
   const classes = useStyles();
