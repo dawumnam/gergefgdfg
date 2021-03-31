@@ -42,7 +42,7 @@ export const signup = async (req, res) => {
       return res
         .status(400)
         .json({ message: "Not all the fields are provided" });
-    const hash = await bcrypt.hashSync(password, 8);
+    const hash = bcrypt.hashSync(password, 8);
     const name = `${lastName} ${firstName}`;
 
     const result = await User.create({ email, password: hash, name });
@@ -50,10 +50,7 @@ export const signup = async (req, res) => {
     const token = jwt.sign({ email: result.email, id: result._id }, "test", {
       expiresIn: "1h",
     });
-    res.status(200).json({ result, token });
-
-    await newUser.save();
-    res.status(200).json(newUser);
+    res.status(200).json({ userInfo: result, token });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong." });
   }

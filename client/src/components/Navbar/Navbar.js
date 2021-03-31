@@ -46,13 +46,14 @@ export default function Navbar() {
         <Toolbar className={classes.toolbar}>
           {user ? (
             <div className={classes.profile}>
-              {/* <Avatar
+              <Avatar
                 className={classes.purple}
                 alt={user.userInfo.name}
                 src={user.userInfo.imageUrl}
               >
                 {user.userInfo.name.charAt(0)}
-              </Avatar> */}
+              </Avatar>
+
               <Typography className={classes.userName} variant="h6">
                 {user.userInfo.name}
               </Typography>
