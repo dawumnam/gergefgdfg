@@ -12,7 +12,8 @@ export const signin = async (req, res) => {
     if (!existingUser)
       return res.status(404).json({ message: "User doesn't exist." });
     const isPasswordCorrect = await bcrypt.compareSync(
-      password.existingUser.password
+      password,
+      existingUser.password
     );
     if (!isPasswordCorrect)
       return res.status(400).json({ message: "Invalid password." });
@@ -22,8 +23,9 @@ export const signin = async (req, res) => {
       "test",
       { expiresIn: "1h" }
     );
-    res.status(200).json({ result: existingUser, token });
+    res.status(200).json({ userInfo: existingUser, token });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Something went wrong." });
   }
 };
@@ -38,10 +40,6 @@ export const signup = async (req, res) => {
       return res.status(404).json({ msessage: "user already exists." });
     if (password !== confirmPassword)
       return res.status(400).json({ message: "Password does not match." });
-    if (!email && !password && !confirmPassword && !firstName && !lastName)
-      return res
-        .status(400)
-        .json({ message: "Not all the fields are provided" });
     const hash = bcrypt.hashSync(password, 8);
     const name = `${lastName} ${firstName}`;
 

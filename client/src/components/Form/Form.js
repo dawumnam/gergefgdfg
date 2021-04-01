@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 
 function Form({ currentId, setCurrentId }) {
   const [postData, setPostData] = useState({
-    creator: "",
     title: "",
     message: "",
     tags: "",
@@ -29,9 +28,19 @@ function Form({ currentId, setCurrentId }) {
     e.preventDefault();
 
     if (currentId) {
-      dispatch(updatePost(currentId, postData));
+      dispatch(
+        updatePost(currentId, {
+          ...postData,
+          creator: JSON.parse(localStorage.getItem("profile"))?.userInfo?.name,
+        })
+      );
     } else {
-      dispatch(createPost(postData));
+      dispatch(
+        createPost({
+          ...postData,
+          creator: JSON.parse(localStorage.getItem("profile"))?.userInfo?.name,
+        })
+      );
     }
     clear();
   };
@@ -39,13 +48,21 @@ function Form({ currentId, setCurrentId }) {
   const clear = () => {
     setCurrentId(null);
     setPostData({
-      creator: "",
       title: "",
       message: "",
       tags: "",
       selectedFile: "",
     });
   };
+
+  if (!localStorage.getItem("profile"))
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant="h6" align="center">
+          Please Sign in to create your own memories and like other's memories
+        </Typography>
+      </Paper>
+    );
 
   return (
     <Paper className={classes.paper}>
@@ -58,16 +75,6 @@ function Form({ currentId, setCurrentId }) {
         <Typography variant="h6">
           {currentId ? "Editing" : "Creating"} Memory
         </Typography>
-        <TextField
-          name="creator"
-          variant="outlined"
-          label="Creator"
-          fullWidth
-          value={postData.creator}
-          onChange={(e) => {
-            setPostData({ ...postData, creator: e.target.value });
-          }}
-        />
         <TextField
           name="title"
           variant="outlined"
