@@ -29,7 +29,7 @@ export default function Navbar() {
     }
 
     setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [location]);
+  }, [location, user?.token]);
 
   return (
     <div>
